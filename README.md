@@ -1,7 +1,7 @@
 # Warsh & the Fed
 
-Replication repository for the deep dive *Inheriting Discretion: What Monetary Rules
-Prescribe for the Warsh Fed* (nikkhosravipour.com/research).
+Replication repository for the deep dive [*Inheriting Discretion: What Monetary Rules
+Prescribe for the Warsh Fed*](https://nikkhosravipour.com/post/inheriting-discretion-what-monetary-rules-prescribe-for-the-warsh-fed).
 
 R pulls quarterly macroeconomic series from FRED and scores the actual federal funds rate
 against four monetary-rule benchmarks. Python reads the scored data and generates Chart.js
