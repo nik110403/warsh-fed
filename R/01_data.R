@@ -5,14 +5,23 @@ fredr_set_key(FRED_API_KEY)
 
 # ── Pull helpers ──────────────────────────────────────────────────────────────
 
+ARCHIVE_DIR <- file.path(PROJECT_ROOT, "data-raw", "fred", FRED_VINTAGE)
+if (!dir.exists(ARCHIVE_DIR)) dir.create(ARCHIVE_DIR, recursive = TRUE)
+archived_series <- character(0)
+
 pull <- function(series_id, units = "lin") {
-  fredr_series_observations(
+  raw <- fredr_series_observations(
     series_id         = series_id,
     observation_start = START_DATE,
     observation_end   = END_DATE,
     frequency         = NULL,
-    units             = units
-  ) |>
+    units             = units,
+    realtime_start    = FRED_VINTAGE,
+    realtime_end      = FRED_VINTAGE
+  )
+  write.csv(raw, file.path(ARCHIVE_DIR, paste0(series_id, ".csv")), row.names = FALSE)
+  archived_series[[length(archived_series) + 1]] <<- series_id
+  raw |>
     dplyr::select(date, value) |>
     dplyr::rename(!!series_id := value)
 }
@@ -35,6 +44,13 @@ raw_gdpc1    <- pull("GDPC1")                      # real GDP, quarterly
 raw_gdppot   <- pull("GDPPOT")                     # potential GDP, quarterly
 raw_gdp      <- pull("GDP")                        # nominal GDP, quarterly
 raw_m2sl     <- pull("M2SL")                       # M2, monthly
+
+writeLines(
+  c(paste("FRED_VINTAGE:", FRED_VINTAGE),
+    paste("Pulled:", format(Sys.time(), "%Y-%m-%d %H:%M:%S %Z")),
+    "Series:", archived_series),
+  file.path(ARCHIVE_DIR, "VINTAGE.txt")
+)
 
 # ── Convert to quarterly ──────────────────────────────────────────────────────
 
