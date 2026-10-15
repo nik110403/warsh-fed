@@ -1,12 +1,49 @@
-# Warsh & the Fed
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg"><img src="assets/banner-light.svg" alt="Inheriting Discretion: What Monetary Rules Prescribe for the Warsh Fed" width="100%"></picture></p>
 
-Replication repository for the deep dive [*Inheriting Discretion: What Monetary Rules
-Prescribe for the Warsh Fed*](https://nikkhosravipour.com/post/inheriting-discretion-what-monetary-rules-prescribe-for-the-warsh-fed).
+**Four monetary rules applied to the Warsh Fed's inheritance do not agree on what it should do: nominal GDP runs 13% above its pre-pandemic path, and the Taylor-rule gap peaked at +8.3 pp in 2022 Q1.**
 
-R pulls quarterly macroeconomic series from FRED and scores the actual federal funds rate
-against four monetary-rule benchmarks. Python reads the scored data and generates Chart.js
-widgets and static figures. The pipeline mirrors the Taylor-rule deep dive repo so the two
-projects read as one research program.
+[Paper](https://nikkhosravipour.com/post/inheriting-discretion-what-monetary-rules-prescribe-for-the-warsh-fed) · [Data](#data-availability) · [Site](https://nikkhosravipour.com)
+
+[![License: MIT](https://img.shields.io/badge/code-MIT-8c2f1b?style=flat)](LICENSE) [![License: CC BY 4.0](https://img.shields.io/badge/text%20and%20figures-CC%20BY%204.0-8c2f1b?style=flat)](LICENSE-docs) [![R 4.3](https://img.shields.io/badge/R-4.3-57534e?style=flat)](https://www.r-project.org/)
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="output/figures/fig0_hook-dark.png"><img src="output/figures/fig0_hook.png" alt="Bars show the gap between the federal funds rate and the Taylor-rule prescription, 2018 to 2026, peaking at 8.3 percentage points in 2022 Q1. A line shows nominal GDP rising to 13% above its 4% trend path by 2026 Q1." width="100%"></picture>
+
+> [!NOTE]
+> Runtime: a few minutes, mostly FRED requests. Built with R 4.3 and Python 3.12. Data vintage: published figures use the FRED state at publication; see [Data vintage](#data-vintage).
+
+R pulls quarterly macroeconomic series from FRED and scores the actual federal funds rate against four monetary-rule benchmarks. Python reads the scored data and generates Chart.js widgets and static figures. The pipeline mirrors the [Taylor-rule deep dive repo](https://github.com/nik110403/taylor-rule) so the two projects read as one research program.
+
+## Quick start
+
+1. Clone: `git clone https://github.com/nik110403/warsh-fed.git && cd warsh-fed`
+2. Get a free [FRED API key](https://fredaccount.stlouisfed.org/apikeys), then `cp .Renviron.example .Renviron` and set `FRED_API_KEY` in it.
+3. Run the R pipeline from the repo root: `Rscript run_all.R`. Packages (`fredr`, `dplyr`, `zoo`, `lubridate`) install on first run via `R/setup.R`. The script prints a key-numbers block (latest quarter rates, peak deviations).
+4. Install the Python packages (no lock file; any recent versions work): `python -m venv .venv && . .venv/bin/activate && pip install numpy pandas matplotlib`
+5. Build the charts: `python python/charts.py` and `python python/dotplot.py`. Figures land in `output/figures/` and Chart.js widgets in `output/widgets/`.
+
+R loads `.Renviron` from the project root automatically. Run all commands from the repo root; `run_all.R` errors if called from a subdirectory.
+
+## Exhibit map
+
+Every figure in the paper, the script that makes it and the file it writes. Widgets are the interactive Chart.js versions of the same charts.
+
+| Exhibit | Script | Output |
+|---|---|---|
+| Headline: Taylor gap and NGDP gap | `python/charts.py` | `output/figures/fig0_hook.png`, `output/widgets/fig0_hook.html` |
+| Policy rate vs. Taylor rules | `python/charts.py` | `output/figures/fig1_taylor_vs_actual.png`, `output/widgets/fig1_taylor_vs_actual.html` |
+| NGDP level vs. 4% path | `python/charts.py` | `output/figures/fig2_ngdp_level.png`, `output/widgets/fig2_ngdp_level.html` |
+| FOMC median dots vs. realized rate | `python/dotplot.py` | `output/figures/fig0_dotgap.png`, `output/widgets/fig0_dotgap.html` |
+
+`python/charts.py` reads `output/data/rules_export.csv`, which `Rscript run_all.R` writes. `python/dotplot.py` needs no pipeline output: the two FOMC median projections and the realized quarterly rate (FRED `FEDFUNDS`) are hard-coded in the script.
+
+## Data availability
+
+| Dataset | Source | Access | Included |
+|---|---|---|---|
+| FEDFUNDS, PCEPILFE, GDPC1, GDPPOT, GDP, M2SL | [FRED](https://fred.stlouisfed.org/) (BEA, BLS, CBO, Federal Reserve Board) | Public, free API key | Scored output only: `output/data/rules_export.csv`. Raw pulls (`data-raw/`) and `.rds` intermediates are not committed. |
+| FOMC median federal funds rate projections (Dec 2015, Mar 2021) | [federalreserve.gov](https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm) | Public | Hard-coded in `python/dotplot.py`, together with the realized rate |
+
+Source data is served by FRED and subject to its terms. The code licence does not cover it.
 
 ## Data vintage
 
@@ -21,32 +58,6 @@ window is locked at 2018 Q1–2026 Q1 in `R/config.R` (`START_DATE`, `END_DATE`)
 whatever FRED reported at publication time, not `FRED_VINTAGE`. Re-running `R/01_data.R`
 reproduces the FRED state as of `FRED_VINTAGE`, which will diverge from the published
 numbers as FRED revises `GDPPOT`, `GDP`, and other series.
-
-## Requirements
-
-- R (≥ 4.0); packages auto-install via `R/setup.R`: `fredr`, `dplyr`, `zoo`, `lubridate`
-- Python (≥ 3.10): `numpy`, `pandas`, `matplotlib`
-- A free FRED API key — https://fredaccount.stlouisfed.org/apikeys
-
-## Setup
-
-```bash
-cp .Renviron.example .Renviron   # edit and paste your FRED_API_KEY
-pip install numpy pandas matplotlib
-```
-
-R loads `.Renviron` from the project root automatically. Run both commands from the repo
-root; `run_all.R` will error if called from a subdirectory.
-
-## Run
-
-```bash
-Rscript run_all.R        # FRED pull → rule scoring → output/data/rules_export.csv
-python python/charts.py  # rules_export.csv → widgets + figures
-```
-
-`run_all.R` also prints a key-numbers block (latest quarter rates, peak deviations) for
-use in prose.
 
 ## FRED series
 
@@ -81,19 +92,49 @@ output-gap term. `GDP` benchmark revisions alter both the Meltzer M2 deviation a
 NGDP gap. The Meltzer and Selgin rules are more stable to revision than the Taylor
 variants. The companion piece documents the vintage used.
 
-## Layout
+## Repository layout
 
-| Script | Role |
-|---|---|
-| `R/01_data.R` | FRED pull → quarterly conversion → `output/data/df_raw.rds` |
-| `R/02_rules.R` | Rule scoring (Taylor, Meltzer, Selgin, NGDP path) → `df_rules.rds` |
-| `R/03_export.R` | CSV export + prose key-numbers → `output/data/rules_export.csv` |
-| `python/charts.py` | Chart.js widgets + PNG figures from `rules_export.csv` |
-| `R/config.R` | Sample window, π\*, r\*, k-percent, NGDP trend |
-| `R/setup.R` | Package management |
+```text
+warsh-fed/
+├── run_all.R          # runs the R pipeline in order
+├── R/
+│   ├── setup.R        # package management
+│   ├── config.R       # sample window, vintage, pi*, r*, k-percent, NGDP trend
+│   ├── 01_data.R      # FRED pull -> quarterly series -> output/data/df_raw.rds
+│   ├── 02_rules.R     # rule scoring -> df_rules.rds
+│   └── 03_export.R    # CSV export + key numbers -> output/data/rules_export.csv
+├── python/
+│   ├── charts.py      # widgets and PNG figures from rules_export.csv
+│   └── dotplot.py     # FOMC dots vs. realized rate
+├── output/
+│   ├── data/          # rules_export.csv
+│   ├── figures/       # static PNGs
+│   └── widgets/       # Chart.js HTML embeds
+├── assets/            # banner and social preview (made by tools/banner)
+├── .Renviron.example  # template for the FRED API key
+├── CITATION.cff
+├── LICENSE            # MIT (code)
+└── LICENSE-docs       # CC BY 4.0 (text and figures)
+```
+
+## Citation
+
+GitHub shows a "Cite this repository" button from `CITATION.cff`. BibTeX:
+
+<details>
+<summary>BibTeX</summary>
+
+```bibtex
+@misc{warsh_fed2026,
+  author = {Khosravipour, Nik},
+  title  = {Inheriting Discretion: What Monetary Rules Prescribe for the Warsh Fed},
+  year   = {2026},
+  url    = {https://github.com/nik110403/warsh-fed}
+}
+```
+
+</details>
 
 ## License
 
-Source data is public, served by [FRED](https://fred.stlouisfed.org/) and subject to its
-terms. The code and generated figures are licensed under [CC BY 4.0](LICENSE) — reuse with
-attribution.
+Code: [MIT](LICENSE). Text and figures: [CC BY 4.0](LICENSE-docs). Source data is public, served by [FRED](https://fred.stlouisfed.org/) and subject to its terms; neither licence covers it.

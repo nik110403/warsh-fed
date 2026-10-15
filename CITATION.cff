@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this package, please cite it as below."
+type: software
+title: "Inheriting Discretion: What Monetary Rules Prescribe for the Warsh Fed"
+abstract: "Replication code for scoring the effective federal funds rate against four monetary-rule benchmarks (two Taylor rules, a Meltzer k-percent rule and a Selgin productivity norm), 2018 Q1 to 2026 Q1."
+authors:
+  - family-names: Khosravipour
+    given-names: Nik
+    orcid: "https://orcid.org/0009-0007-4464-5002"
+repository-code: "https://github.com/nik110403/warsh-fed"
+url: "https://nikkhosravipour.com/post/inheriting-discretion-what-monetary-rules-prescribe-for-the-warsh-fed"
+license: MIT
