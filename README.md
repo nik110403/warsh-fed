@@ -4,7 +4,7 @@
 
 [Paper](https://nikkhosravipour.com/post/inheriting-discretion-what-monetary-rules-prescribe-for-the-warsh-fed) · [Data](#data-availability) · [Site](https://nikkhosravipour.com)
 
-[![License: MIT](https://img.shields.io/badge/code-MIT-8c2f1b?style=flat)](LICENSE) [![License: CC BY 4.0](https://img.shields.io/badge/text%20and%20figures-CC%20BY%204.0-8c2f1b?style=flat)](LICENSE-docs) [![R 4.3](https://img.shields.io/badge/R-4.3-57534e?style=flat)](https://www.r-project.org/)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.23404663-8c2f1b?style=flat)](https://doi.org/10.5281/zenodo.23404663) [![License: MIT](https://img.shields.io/badge/code-MIT-8c2f1b?style=flat)](LICENSE) [![License: CC BY 4.0](https://img.shields.io/badge/text%20and%20figures-CC%20BY%204.0-8c2f1b?style=flat)](LICENSE-docs) [![R 4.3](https://img.shields.io/badge/R-4.3-57534e?style=flat)](https://www.r-project.org/)
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="output/figures/fig0_hook-dark.png"><img src="output/figures/fig0_hook.png" alt="Bars show the gap between the federal funds rate and the Taylor-rule prescription, 2018 to 2026, peaking at 8.3 percentage points in 2022 Q1. A line shows nominal GDP rising to 13% above its 4% trend path by 2026 Q1." width="100%"></picture>
 
@@ -119,7 +119,7 @@ warsh-fed/
 
 ## Citation
 
-GitHub shows a "Cite this repository" button from `CITATION.cff`. BibTeX:
+Archived on Zenodo: [doi:10.5281/zenodo.23404663](https://doi.org/10.5281/zenodo.23404663) (all versions). GitHub shows a "Cite this repository" button from `CITATION.cff`. BibTeX:
 
 <details>
 <summary>BibTeX</summary>
@@ -129,6 +129,7 @@ GitHub shows a "Cite this repository" button from `CITATION.cff`. BibTeX:
   author = {Khosravipour, Nik},
   title  = {Inheriting Discretion: What Monetary Rules Prescribe for the Warsh Fed},
   year   = {2026},
+  doi    = {10.5281/zenodo.23404663},
   url    = {https://github.com/nik110403/warsh-fed}
 }
 ```
