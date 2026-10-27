@@ -1,0 +1,11 @@
+repo: warsh-fed
+captured_at: 2026-09-11T17:09:58+0200
+R_version: 4.3.3
+n_packages: 29
+n_missing: 0 (warsh-fed.missing is empty)
+loader_file: R/setup.R
+source_lock_sha256: 3e9789266002192e6055e37ef2e7a546dbd4ec2cd34f4661e1da48f0a1422dd7
+source_lock_path: /home/nik/Projects/analysis/_bench/pre-bench/warsh-fed.lock
+basis: union of the loader file's literal package vector and renv::dependencies() static scan, minus base packages, resolved against the user library and R's own libraries at capture time.
+
+later-captured plausible superset; not the producing environment and not evidence that published results reproduce

@@ -1,0 +1,39 @@
+{
+  "exhibits": [
+    {
+      "id": "data-rules-export",
+      "title": "Scored rules dataset (rules_export.csv)",
+      "script": "R/03_export.R",
+      "outputs": ["output/data/rules_export.csv"],
+      "claim": "Quarterly FRED series scored against four monetary-rule benchmarks, 2018 Q1-2026 Q1; input to python/charts.py; README data-availability row."
+    },
+    {
+      "id": "fig-0-hook",
+      "title": "Headline: Taylor gap and NGDP gap",
+      "script": "python/charts.py",
+      "outputs": ["output/figures/fig0_hook.png", "output/widgets/fig0_hook.html"],
+      "claim": "README exhibit: Headline: Taylor gap and NGDP gap."
+    },
+    {
+      "id": "fig-1",
+      "title": "Policy rate vs. Taylor rules",
+      "script": "python/charts.py",
+      "outputs": ["output/figures/fig1_taylor_vs_actual.png", "output/widgets/fig1_taylor_vs_actual.html"],
+      "claim": "README exhibit: Policy rate vs. Taylor rules."
+    },
+    {
+      "id": "fig-2",
+      "title": "NGDP level vs. 4% path",
+      "script": "python/charts.py",
+      "outputs": ["output/figures/fig2_ngdp_level.png", "output/widgets/fig2_ngdp_level.html"],
+      "claim": "README exhibit: NGDP level vs. 4% path."
+    },
+    {
+      "id": "fig-0-dotgap",
+      "title": "FOMC median dots vs. realized rate",
+      "script": "python/dotplot.py",
+      "outputs": ["output/figures/fig0_dotgap.png", "output/widgets/fig0_dotgap.html", "output/widgets/fig0_dotgap.embed.md"],
+      "claim": "README exhibit: FOMC median dots vs. realized rate; the script also writes the embed.md fenced version."
+    }
+  ]
+}
