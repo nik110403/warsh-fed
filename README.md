@@ -48,8 +48,7 @@ Source data is served by FRED and subject to its terms. The code licence does no
 ## Data vintage
 
 FRED revises historical series, including `GDPPOT` (CBO potential output) and `GDP`
-(nominal, subject to benchmark revision). Results reproduce exactly against the vintage
-retrieved for the published piece; subsequent pulls may shift rule prescriptions. The sample
+(nominal, subject to benchmark revision). The later environment capture does not establish exact reproduction of published results. The current FRED vintage pin postdates publication and may yield different values. The committed scored exports (`output/data/rules_export.csv`, commit b8913f0) are comparison targets, not proof of reproduction. The sample
 window is locked at 2018 Q1–2026 Q1 in `R/config.R` (`START_DATE`, `END_DATE`).
 
 `R/config.R` also pins a `FRED_VINTAGE` (realtime-as-of date) passed as
